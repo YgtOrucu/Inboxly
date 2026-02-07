@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Inboxly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D946EF",
+                        secondary: "#6366f1",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#0F172A",
+                        "accent-purple": "#8B5CF6",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        '2xl': '1.5rem',
+                        '3xl': '2rem',
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #D946EF 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #D946EF 0%, #8B5CF6 100%);
+        }
+        .glass-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col overflow-hidden">
+    <nav class="fixed top-0 w-full z-50 glass-card border-b border-slate-200/50 dark:border-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Inboxly</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a asp-controller="Login" asp-action="SignIn" class="text-sm font-semibold px-4 py-2 text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-all">
+                        Giriş Yap
+                    </a>
+                    <a asp-controller="Login" asp-action="SignUp" class="gradient-bg text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-all">
+                        Üye Ol
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="relative w-full max-w-4xl">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-accent-purple/5 rounded-full blur-[120px] -z-10"></div>
+            <section class="text-center space-y-6">
+                <h2 class="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4">BİZ KİMİZ?</h2>
+                <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    Tüm E-postalarınız <br />
+                    <span class="gradient-text">Tek Bir Akıllı Merkezde</span>
+                </h1>
+                <p class="text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                    Gelen, giden, taslak ve spam mesajlarınızı tek ekranda yönetin.
+                    Profil ve yönetim panelinizle hesabınızı özelleştirin, tüm kontrol sizde olsun.
+                </p>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,128 @@
+﻿@model SignInDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Giriş Yap | Inboxly</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/mendy-admin/package/assets/images/favicon.png">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#d946ef", // Vibrant pink from the gradient
+                        "background-light": "#f3f4f6",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .gradient-button {
+            background: linear-gradient(90deg, #ff49db 0%, #a855f7 100%)
+        }
+
+        .bg-blur-office {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/mendy-admin/package/assets/images/big/auth-bg.jpg);
+            background-size: cover;
+            background-position: center
+        }</style>
+</head>
+<body class="font-display antialiased min-h-screen flex items-center justify-center bg-blur-office">
+    <div class="w-full max-w-md px-3 py-6 rounded-lg bg-white dark:bg-slate-900 shadow-2xl rounded-DEFAULT transition-colors duration-300">
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center w-12 h-12 mb-4 rounded-xl text-white shadow-lg shadow-primary/30">
+                <img src="/mendy-admin/package/assets/images/logo-icon.png" alt="logo" />
+            </div>
+            <h1 class="text-xl font-semibold text-slate-800 dark:text-white">
+                Giriş Yap
+            </h1>
+        </div>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+                <div class="font-bold mb-2">
+                    Lütfen aşağıdaki hataları düzeltiniz
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "list-disc list-inside space-y-1" })
+            </div>
+        }
+        <form method="post" class="space-y-6">
+
+            <div class="relative flex items-stretch border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+                <div class="flex items-center justify-center px-4 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-r border-slate-200 dark:border-slate-700">
+                    <span class="material-symbols-outlined text-[20px]">person</span>
+                </div>
+                <input asp-for="Email"
+                       class="block w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500 text-sm"
+                       placeholder="E-posta adresi"
+                       type="email" />
+            </div>
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+
+            <div class="relative flex items-stretch border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
+                <div class="flex items-center justify-center px-4 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-r border-slate-200 dark:border-slate-700">
+                    <span class="material-symbols-outlined text-[20px]">lock</span>
+                </div>
+                <input asp-for="Password"
+                       class="block w-full px-4 py-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-500 text-sm"
+                       placeholder="Şifre"
+                       type="password" />
+            </div>
+            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+
+            <div class="flex items-center justify-between text-sm">
+                <label class="flex items-center space-x-2 cursor-pointer group">
+                    <input asp-for="RememberMe"
+                           class="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary dark:bg-slate-800"
+                           type="checkbox" />
+                    <span class="text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                        Beni hatırla
+                    </span>
+                </label>
+
+                <a class="flex items-center text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+                    <span class="material-symbols-outlined text-[16px] mr-1">lock</span>
+                    Şifremi unuttum
+                </a>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit"
+                    class="gradient-button w-full py-3.5 text-white font-semibold rounded-lg shadow-lg shadow-primary/25 hover:opacity-90 active:scale-[0.98] transition-all">
+                Giriş Yap
+            </button>
+
+            <!-- Sign up -->
+            <div class="text-center pt-4">
+                <p class="text-sm text-slate-500 dark:text-slate-400">
+                    Hesabın yok mu?
+                    <a href="/Login/SignUp" class="text-cyan-500 hover:text-cyan-600 font-semibold transition-colors">
+                        Kayıt Ol
+                    </a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>

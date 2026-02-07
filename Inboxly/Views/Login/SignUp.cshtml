@@ -1,0 +1,288 @@
+﻿@model SignUpDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="light" lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kayıt Ol | Inboxly</title>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/mendy-admin/package/assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#d946ef",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                        xl: "20px",
+                        "2xl": "24px",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .gradient-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 10px 15px -3px rgba(236, 72, 153, 0.3);
+            }
+
+        .input-focus:focus {
+            outline: none;
+            border-color: #d946ef;
+            box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.1);
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-slate-900 dark:text-slate-100 min-h-screen relative overflow-x-hidden">
+
+    <div class="fixed inset-0 z-[-1]">
+        <img src="/mendy-admin/package/assets/images/big/auth-bg.jpg" alt="Modern ofis alanı" class="w-full h-full object-cover" />
+        <div class="absolute inset-0"></div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="glass w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-500">
+            <div class="px-4 pt-5 pb-6">
+
+                <div class="text-center mb-4">
+                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-tr to-purple-500 text-white mb-2 shadow-lg">
+                        <img src="/mendy-admin/package/assets/images/logo-icon.png" />
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">
+                        Profesyonel hesabını oluştur
+                    </p>
+                </div>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+                        <div class="font-bold mb-2">
+                            Lütfen aşağıdaki hataları düzeltiniz
+                        </div>
+
+                        @Html.ValidationSummary(true, "", new { @class = "list-disc list-inside space-y-1" })
+                    </div>
+                }
+                <form method="post" enctype="multipart/form-data" class="space-y-4">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                                Ad
+                            </label>
+                            <input type="text" placeholder="Adınız" asp-for="Name"
+                                   class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                                Soyad
+                            </label>
+                            <input type="text" placeholder="Soyadınız" asp-for="Surname"
+                                   class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                            @Html.ValidationMessageFor(x => x.Surname, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                            Kullanıcı Adı
+                        </label>
+                        <input type="text" placeholder="kullaniciadi" asp-for="UserName"
+                               class="w-full pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                            E-posta Adresi
+                        </label>
+                        <input type="email" placeholder="ornek@mail.com" asp-for="Email"
+                               class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                                Şifre
+                            </label>
+                            <input type="password" placeholder="••••••••" asp-for="Password"
+                                   class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                                Şifre (Tekrar)
+                            </label>
+                            <input type="password" placeholder="••••••••" asp-for="ConfirmPassword"
+                                   class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 input-focus transition-all text-sm placeholder:text-slate-400" />
+                            @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-col space-y-1.5">
+                        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 ml-1">
+                            Profil Fotoğrafı
+                        </label>
+
+                        <input type="file"
+                               accept="image/*"
+                               asp-for="ImageFile"
+                               class="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50
+                                text-sm text-slate-600 dark:text-slate-300
+                                input-focus transition-all cursor-pointer
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-lg
+                                file:border-0
+                                file:bg-primary
+                                file:text-white
+                                file:text-sm
+                                file:font-medium
+                                hover:file:opacity-90" />
+                        @Html.ValidationMessageFor(x => x.ImageFile, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                    </div>
+
+
+                    <div class="flex items-center gap-3 pt-2">
+                        <input type="checkbox" asp-for="AcceptPrivacy"
+                               class="w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary transition-all cursor-pointer" />
+                        <label for="AcceptPrivacy" class="text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+                            <a href="javascript:void(0)"
+                               onclick="openTermsModal()"
+                               class="text-primary hover:underline font-medium">
+                                Kullanım Şartlarını
+                            </a>kabul ediyorum
+                        </label>
+                        @Html.ValidationMessageFor(x => x.AcceptPrivacy, "", new { @class = "text-xs text-red-500 font-medium mt-1" })
+                    </div>
+
+                    <div class="pt-1">
+                        <button type="submit"
+                                class="gradient-btn w-full py-2 rounded-xl text-white font-bold text-lg shadow-xl uppercase tracking-wide">
+                            Kayıt Ol
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+                        Zaten bir hesabın var mı?
+                        <a href="/Login/SignIn" class="text-primary font-bold hover:underline ml-1">
+                            Giriş Yap
+                        </a>
+                    </p>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kullanım Şartları Modal -->
+    <div id="termsModal"
+         class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+
+        <div class="glass w-full max-w-xl rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-300">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                <h2 class="text-lg font-bold text-slate-800 dark:text-white">
+                    Kullanım Şartları
+                </h2>
+                <button onclick="closeTermsModal()"
+                        class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+
+            <!-- Content -->
+            <div class="px-6 py-4 max-h-[60vh] overflow-y-auto text-sm text-slate-600 dark:text-slate-300 space-y-3">
+                <p>
+                    Bu platformu kullanarak, Inboxly kullanım şartlarını kabul etmiş olursunuz.
+                </p>
+                <p>
+                    Kullanıcılar sisteme yükledikleri içeriklerden kendileri sorumludur.
+                </p>
+                <p>
+                    Inboxly, hizmetlerde önceden bildirim yapmaksızın değişiklik yapma hakkını saklı tutar.
+                </p>
+                <p>
+                    Hesabınızın güvenliğinden siz sorumlusunuz. Şifrenizi kimseyle paylaşmayınız.
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="flex justify-end gap-3 px-6 py-4 border-t border-slate-200 dark:border-slate-700">
+                <button onclick="closeTermsModal()"
+                        class="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600
+                           text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    Kapat
+                </button>
+
+                <button onclick="acceptTerms()"
+                        class="gradient-btn px-5 py-2 rounded-lg text-white text-sm font-semibold">
+                    Kabul Ediyorum
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function openTermsModal() {
+            document.getElementById("termsModal").classList.remove("hidden");
+            document.getElementById("termsModal").classList.add("flex");
+        }
+
+        function closeTermsModal() {
+            document.getElementById("termsModal").classList.add("hidden");
+            document.getElementById("termsModal").classList.remove("flex");
+        }
+
+        function acceptTerms() {
+            document.getElementById("AcceptPrivacy").checked = true;
+            closeTermsModal();
+        }
+    </script>
+
+</body>
+</html>
