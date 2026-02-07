@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+@await Component.InvokeAsync("InboxlyHead")
+<body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        @await Component.InvokeAsync("InboxlyHeader")
+        <div class="page-wrapper" style="margin:0">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @await Component.InvokeAsync("InboxlyScript")
+</body>
+</html>

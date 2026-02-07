@@ -42,7 +42,7 @@ namespace Inboxly.Controllers
                 user.ConfirmCode = 0;
                 user.TwoFactorEnabled = true;
                 await _userManager.UpdateAsync(user);
-                return RedirectToAction("InboxEmail", "Email");
+                return RedirectToAction("Inbox", "Inboxly");
             }
             else
             {
@@ -91,7 +91,7 @@ namespace Inboxly.Controllers
                     ModelState.AddModelError("", "Mail veya Şifre Hatalı !!!");
                     return View(signInDto);
                 }
-                return RedirectToAction("InboxEmail", "Email");
+                return RedirectToAction("Inbox", "Inboxly");
             }
             else
             {
