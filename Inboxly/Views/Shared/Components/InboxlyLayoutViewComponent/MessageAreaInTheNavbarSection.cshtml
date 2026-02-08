@@ -1,67 +1,36 @@
-﻿<li class="nav-item dropdown">
+﻿@model MessageAreaSectionDto
+
+
+<li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown"
        aria-haspopup="true" aria-expanded="false">
         <i data-feather="mail"></i>
-        <span class="badge badge-pill badge-danger noti">5</span>
+        <span class="badge badge-pill badge-danger noti">@Model.AllMessageCount</span>
     </a>
     <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown"
          aria-labelledby="2">
         <ul class="list-style-none">
             <li>
                 <div class="drop-title bg-light">
-                    <h4 class="mb-0 mt-1">5 new messages</h4>
+                    <h4 class="mb-0 mt-1">Mesajlar</h4>
                 </div>
             </li>
             <li>
                 <div class="message-center message-body">
-                    <!-- Message -->
-                    <a href="javascript:void(0)" class="message-item">
-                        <span class="user-img">
-                            <img src="/mendy-admin/package/assets/images/users/1.jpg" alt="user" class="rounded-circle">
+                    @foreach(var item in Model.Messages)
+                    {
+                        <a href="javascript:void(0)" class="message-item">
+                        <span class="user-img initials-avatar">
+                            @(item.NameSurnameHead)
                             <span class="profile-status online pull-right"></span>
                         </span>
                         <div class="mail-contnet">
-                            <h5 class="message-title">Pavan kumar</h5>
-                            <span class="mail-desc">Just see the my admin!</span>
-                            <span class="time">9:30 AM</span>
+                            <h5 class="message-title">@(item.NameSurname)</h5>
+                            <span class="mail-desc">@(item.Subject)</span>
+                            <span class="time">@(item.Date)</span>
                         </div>
-                    </a>
-                    <!-- Message -->
-                    <a href="javascript:void(0)" class="message-item">
-                        <span class="user-img">
-                            <img src="/mendy-admin/package/assets/images/users/2.jpg" alt="user" class="rounded-circle">
-                            <span class="profile-status busy pull-right"></span>
-                        </span>
-                        <div class="mail-contnet">
-                            <h5 class="message-title">Sonu Nigam</h5>
-                            <span class="mail-desc">I've sung a song! See you at</span>
-                            <span class="time">9:10 AM</span>
-                        </div>
-                    </a>
-                    <!-- Message -->
-                    <a href="javascript:void(0)" class="message-item">
-                        <span class="user-img">
-                            <img src="/mendy-admin/package/assets/images/users/3.jpg" alt="user" class="rounded-circle">
-                            <span class="profile-status away pull-right"></span>
-                        </span>
-                        <div class="mail-contnet">
-                            <h5 class="message-title">Arijit Sinh</h5>
-                            <span class="mail-desc">I am a singer!</span>
-                            <span class="time">9:08 AM</span>
-                        </div>
-                    </a>
-                    <!-- Message -->
-                    <a href="javascript:void(0)" class="message-item">
-                        <span class="user-img">
-                            <img src="/mendy-admin/package/assets/images/users/4.jpg" alt="user" class="rounded-circle">
-                            <span class="profile-status offline pull-right"></span>
-                        </span>
-                        <div class="mail-contnet">
-                            <h5 class="message-title">Pavan kumar</h5>
-                            <span class="mail-desc">Just see the my admin!</span>
-                            <span class="time">9:02 AM</span>
-                        </div>
-                    </a>
+                    </a>  
+                    }    
                 </div>
             </li>
             <li>

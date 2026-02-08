@@ -1,12 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Inboxly.Context;
+using Inboxly.Dtos.MessageAreaInTheNavbarDto;
+using Inboxly.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inboxly.InboxlyViewComponent.InboxlyLayoutViewComponent
 {
     public class MessageAreaInTheNavbarSection : ViewComponent
     {
-        public IViewComponentResult Invoke()
+        private readonly UserManager<AppUser> _userManager;
+        private readonly InboxlyContext _ınboxlyContext;
+
+        public MessageAreaInTheNavbarSection(UserManager<AppUser> userManager, InboxlyContext ınboxlyContext)
         {
-            return View("~/Views/Shared/Components/InboxlyLayoutViewComponent/MessageAreaInTheNavbarSection.cshtml");
+            _userManager = userManager;
+            _ınboxlyContext = ınboxlyContext;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var messages = new MessageAreaSectionDto
+            {
+                AllMessageCount = _ınboxlyContext.Messages.Where(x => x.ReceiverMail == user.Email).Count(),
+                Messages = _ınboxlyContext.Messages.Where(x => x.ReceiverMail == user.Email).OrderByDescending(y => y.SendDate).Take(5).Select(z => new MessagePreviewDto
+                {
+                    NameSurnameHead = z.SenderName.Substring(0, 1) + z.SenderSurname.Substring(0, 1),
+                    NameSurname = z.SenderName + z.SenderSurname,
+                    Subject = z.Subject,
+                    Date = z.SendDate.ToString("HH:mm tt")
+                }).ToList()
+            };
+
+            return View("~/Views/Shared/Components/InboxlyLayoutViewComponent/MessageAreaInTheNavbarSection.cshtml", messages);
         }
     }
 }
