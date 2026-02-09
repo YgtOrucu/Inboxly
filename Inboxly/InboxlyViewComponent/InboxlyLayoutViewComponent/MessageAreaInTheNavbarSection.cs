@@ -23,13 +23,13 @@ namespace Inboxly.InboxlyViewComponent.InboxlyLayoutViewComponent
 
             var messages = new MessageAreaSectionDto
             {
-                AllMessageCount = _ınboxlyContext.Messages.Where(x => x.ReceiverMail == user.Email).Count(),
-                Messages = _ınboxlyContext.Messages.Where(x => x.ReceiverMail == user.Email).OrderByDescending(y => y.SendDate).Take(5).Select(z => new MessagePreviewDto
+                AllMessageCount = _ınboxlyContext.Messages.Count(),
+                Messages = _ınboxlyContext.Messages.Where(x => x.MessageStatusId == 1).OrderByDescending(y => y.SendDate).Take(5).Select(z => new MessagePreviewDto
                 {
                     NameSurnameHead = z.SenderName.Substring(0, 1) + z.SenderSurname.Substring(0, 1),
-                    NameSurname = z.SenderName + z.SenderSurname,
+                    NameSurname = z.SenderName + " " + z.SenderSurname,
                     Subject = z.Subject,
-                    Date = z.SendDate.ToString("HH:mm tt")
+                    Date = z.SendDate.ToString("dd-MMM-yyyy")
                 }).ToList()
             };
 

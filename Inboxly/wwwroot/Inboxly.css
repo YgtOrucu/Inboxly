@@ -1,0 +1,41 @@
+﻿.star-toggle {
+    color: #999;
+    cursor: pointer;
+}
+
+    .star-toggle i.fas {
+        color: #f4c430; /* altın sarısı */
+    }
+
+    .star-toggle:hover {
+        color: #f4c430;
+    }
+
+
+.user-initials {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #7367f0; /* istersen random da yaparız */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.user-initials-lg {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #4fc3f7; /* istersen kategoriye göre değiştiririz */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+}

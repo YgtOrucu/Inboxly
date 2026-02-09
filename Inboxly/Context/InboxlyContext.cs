@@ -12,5 +12,6 @@ namespace Inboxly.Context
         }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageStatus> MessageStatuses  { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

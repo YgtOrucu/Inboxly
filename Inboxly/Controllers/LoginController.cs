@@ -143,7 +143,7 @@ namespace Inboxly.Controllers
             {
 
                 var resource = Directory.GetCurrentDirectory();
-                var extension = Path.GetExtension(signUpDto.ImageFile.Name);
+                var extension = Path.GetExtension(signUpDto.ImageFile.FileName);
                 var imageName = Guid.NewGuid() + extension;
                 var uploadPath = Path.Combine(resource, "wwwroot", "images");
 

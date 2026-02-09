@@ -14,5 +14,8 @@
         public DateTime SendDate { get; set; }
         public int MessageStatusId { get; set; }
         public MessageStatus MessageStatus  { get; set; }
+        public int CategoryId { get; set; }
+        public Category Categories { get; set; }
+
     }
 }

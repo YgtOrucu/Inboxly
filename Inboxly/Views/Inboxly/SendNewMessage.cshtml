@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "SendNewMessage";
+    Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="email-app">
+        @await Component.InvokeAsync("LeftBarInTheMailOperations")
+        <div class="right-part mail-compose bg-white" style="margin-left:260px;">
+            <div class="p-20 border-bottom">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4>Oluştur</h4>
+                        <span>Yeni Mesaj Oluştur</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <input type="email" id="example-email" name="example-email" class="form-control"
+                               placeholder="Kime">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="example-subject" name="example-subject" class="form-control"
+                               placeholder="Konu">
+                    </div>
+                    <div id="summernote"></div>
+                    <button type="submit" class="btn btn-success m-t-20">
+                        <i class="far fa-envelope"></i>
+                        Yolla
+                    </button>
+                    <button type="submit" class="btn btn-dark m-t-20">Geri</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

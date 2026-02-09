@@ -1,0 +1,90 @@
+﻿@model LeftBarInTheMailOperationsDto
+<div class="left-part bg-white" style="width:260px;">
+    <a class="ti-menu ti-close btn btn-success show-left-part d-block d-md-none"></a>
+    <div class="scrollable" style="height:100%;">
+        <div class="p-15">
+            <a id="compose_mail" class="waves-effect waves-light btn btn-danger d-block" asp-controller="Inboxly" asp-action="SendNewMessage">
+                Yeni E-posta
+            </a>
+        </div>
+
+        <div class="divider"></div>
+
+        <ul class="list-group">
+            <li>
+                <small class="p-15 grey-text text-lighten-1 db">Klasörler</small>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Inbox" class="active list-group-item-action">
+                    <i class="mdi mdi-inbox"></i>
+                    Gelen Kutusu <span class="label bg-success text-white float-right">@Model.InboxCount</span>
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="StarsMessages" class="list-group-item-action">
+                    <i class="mdi mdi-star"></i>
+                    Yıldızlı <span class="label bg-secondary text-white float-right">@Model.StarsMessagesCount</span>
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Drafts" class="list-group-item-action">
+                    <i class="far fa-file" style="margin-right:5px;"></i>
+                    Taslaklar <span class="label bg-warning text-white float-right">@Model.DraftsCount</span>
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="SendBox" class="list-group-item-action">
+                    <i class="mdi mdi-send"></i>
+                    Gönderilenler <span class="label bg-info text-white float-right">@Model.SendBoxCount</span>
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="DeletedMessages" class="list-group-item-action">
+                    <i class="fas fa-trash-alt" style="margin-right:5px;"></i>
+                    Çöp Kutusu  <span class="label text-white float-right" style="background-color:red">@Model.DeletedMessagesCount</span>
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <hr>
+            </li>
+
+            <li>
+                <small class="p-15 grey-text text-lighten-1 db">Etiketler</small>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Inbox" class="list-group-item-action">
+                    <i class="text-danger mdi mdi-checkbox-blank-circle"></i>
+                    İş
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Inbox" class="list-group-item-action">
+                    <i class="text-cyan mdi mdi-checkbox-blank-circle"></i>
+                    Ticari
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Inbox" class="list-group-item-action">
+                    <i class="text-warning mdi mdi-checkbox-blank-circle"></i>
+                    Aile
+                </a>
+            </li>
+
+            <li class="list-group-item">
+                <a asp-controller="Inboxly" asp-action="Inbox" class="list-group-item-action">
+                    <i class="text-info mdi mdi-checkbox-blank-circle"></i>
+                    Arkadaşlar
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

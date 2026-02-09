@@ -1,9 +1,10 @@
-﻿@model List<ForInboxDtos>
+﻿@model List<ForSendboxDtos>
 @{
-    ViewData["Title"] = "Inbox";
+    ViewData["Title"] = "SendBox";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
     int count = 0;
 }
+
 
 <div class="container-fluid">
     <div class="email-app">
@@ -75,13 +76,13 @@
                                 <!-- User image -->
                                 <td class="user-image">
                                     <div class="user-initials">
-                                        @(item.SenderName.Substring(0, 1) + item.SenderSurname.Substring(0, 1))
+                                        @(item.ReceiverName.Substring(0, 1) + item.ReceiverSurname.Substring(0, 1))
                                     </div>
                                 </td>
 
                                 <!-- User name -->
                                 <td class="user-name">
-                                    <h6 class="m-b-0">@(item.SenderName + " " + item.SenderSurname)</h6>
+                                    <h6 class="m-b-0">@(item.ReceiverName + " " + item.ReceiverSurname)</h6>
                                 </td>
 
                                 <!-- Message -->
@@ -89,7 +90,7 @@
                                     <a class="link" asp-controller="Inboxly" asp-action="MessageDetails" asp-route-itemid="@item.MessageId">
                                         <span class="label @(label) m-r-10">@(item.CategoryName)</span>
                                         <span class="blue-grey-text text-darken-4">
-                                            @(item.Details.Length < 40 ? item.Details : item.Details.Substring(0, 40) + "...")
+                                            @item.Details
                                         </span>
                                     </a>
                                 </td>
@@ -115,3 +116,5 @@
         </div>
     </div>
 </div>
+
+

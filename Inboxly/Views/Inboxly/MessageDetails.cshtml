@@ -1,0 +1,53 @@
+﻿@model EmailDetailsDto
+@{
+    ViewData["Title"] = "MessageDetails";
+    Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
+    var messagedetails = Model.Details.Split(',');
+}
+
+<div class="container-fluid">
+    <div class="email-app">
+
+        @await Component.InvokeAsync("LeftBarInTheMailOperations")
+        <div class="right-part mail-details bg-white" style="margin-left:260px;">
+            <div class="card-body">
+                @if (Model.MessageId == 1)
+                {
+                    <a asp-controller="Inboxly" asp-action="Inbox" type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
+                        <i class="mdi mdi-arrow-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Inboxly" asp-action="SendBox" type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
+                        <i class="mdi mdi-arrow-left"></i>
+                    </a>
+                }
+            </div>
+            <div class="card-body border-top border-bottom bg-light">
+                <h4 class="m-b-0">Mesaj Ayrıntıları</h4>
+            </div>
+            <div class="card-body border-bottom">
+                <div class="d-flex no-block align-items-center m-b-40">
+                    <div class="m-r-10">
+                        <div class="user-initials-lg">
+                            @Model.Name.Substring(0, 1)@Model.Surname.Substring(0, 1)
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <h5 class="m-b-0 font-16 font-medium">@(Model.Name + " " + Model.Surname)</h5><span>
+                            @Model.Mail
+                        </span>
+                    </div>
+                </div>
+                <h4 class="m-b-15">@messagedetails[0],</h4>
+                <p>
+                    @messagedetails[1]
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
