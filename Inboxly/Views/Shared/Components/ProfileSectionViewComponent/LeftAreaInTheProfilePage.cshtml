@@ -1,0 +1,21 @@
+﻿@model ResultForLeftSectionDto
+
+<div class="card">
+    <div class="card-body">
+        <center class="m-t-30">
+            <img src="@Model.AvatarImage" class="rounded-circle"
+                 width="150" />
+            <h4 class="card-title m-t-10">@Model.Name @Model.Surname</h4>
+            <h6 class="card-subtitle">@Model.Location</h6>
+        </center>
+    </div>
+    <div>
+        <hr>
+    </div>
+    <div class="card-body">
+        <small class="text-muted">Mail Adresi </small>
+        <h6>@Model.Email</h6> <small class="text-muted p-t-30 db">Telefon</small>
+        <h6>@Model.PhoneNumber</h6> <small class="text-muted p-t-30 db">Adres</small>
+        <h6>@Model.Address</h6>
+    </div>
+</div>

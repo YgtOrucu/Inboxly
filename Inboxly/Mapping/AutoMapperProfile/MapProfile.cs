@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Inboxly.Dtos.ForEmailSectionDtos;
+using Inboxly.Dtos.ForLeftAreaProfileDto;
 using Inboxly.Dtos.LoginDtos;
 using Inboxly.Dtos.ProfileAreaInTheNavbarDto;
+using Inboxly.Dtos.ProfileAreaInTheProfilePageDtos;
+using Inboxly.Dtos.SettingAreaInTheProfilePageDto;
 using Inboxly.Entities;
 
 namespace Inboxly.Mapping.AutoMapperProfile
@@ -12,6 +15,9 @@ namespace Inboxly.Mapping.AutoMapperProfile
         {
             CreateMap<AppUser, SignUpDto>().ReverseMap();
             CreateMap<AppUser, ProfileAreaSectionDto>().ReverseMap();
+            CreateMap<AppUser, ResultForLeftSectionDto>().ReverseMap();
+            CreateMap<AppUser, SettingInTheProfilePageDto>().ReverseMap();
+            CreateMap<AppUser, ResultForProfileAreaDto>().ReverseMap();
 
             CreateMap<Message, SendNewMessageDtos>().ReverseMap();
 

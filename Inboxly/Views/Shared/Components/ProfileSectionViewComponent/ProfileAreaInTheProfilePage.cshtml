@@ -1,0 +1,31 @@
+﻿@model ResultForProfileAreaDto
+<div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Adı Soyadı</strong>
+                <br>
+                <p class="text-muted">@Model.Name @Model.Surname</p>
+            </div>
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Telefon</strong>
+                <br>
+                <p class="text-muted">@Model.PhoneNumber</p>
+            </div>
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Mail Adresi</strong>
+                <br>
+                <p class="text-muted">@Model.Email</p>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <strong>Konum</strong>
+                <br>
+                <p class="text-muted">@Model.Location</p>
+            </div>
+        </div>
+        <hr>
+        <p class="m-t-30">
+            @Model.About
+        </p>
+    </div>
+</div>

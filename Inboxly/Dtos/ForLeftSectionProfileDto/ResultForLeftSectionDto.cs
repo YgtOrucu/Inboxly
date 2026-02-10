@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Inboxly.Entities
+﻿namespace Inboxly.Dtos.ForLeftAreaProfileDto
 {
-    public class AppUser : IdentityUser<Guid>
+    public class ResultForLeftSectionDto
     {
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? AvatarImage { get; set; }
-        public string? About { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
         public string? Location { get; set; }
-        public int ConfirmCode { get; set; }
+
     }
 }
