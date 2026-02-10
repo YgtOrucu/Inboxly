@@ -2,7 +2,18 @@
 @{
     ViewData["Title"] = "MessageDetails";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
-    var messagedetails = Model.Details.Split(',');
+    var content = Model.Details;
+    var index = content.IndexOf(",");
+    string firstPart = index > -1 ? content.Substring(0, index + 1) : content;
+    string secondPart = index > -1 ? content.Substring(index + 1) : "";
+    string action = Model.MessageStatusId switch
+    {
+        1 => "Inbox",
+        2 => "SendBox",
+        3 => "ListDrafts",
+        4 => "ListStarsMessages",
+        6 => "ListDeletedMessages"
+    };
 }
 
 <div class="container-fluid">
@@ -13,13 +24,13 @@
             <div class="card-body">
                 @if (Model.MessageStatusId == 1)
                 {
-                    <a asp-controller="Inboxly" asp-action="Inbox" type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
+                    <a asp-controller="Inboxly" asp-action=@action type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
                         <i class="mdi mdi-arrow-left"></i>
                     </a>
                 }
                 else
                 {
-                    <a asp-controller="Inboxly" asp-action="SendBox" type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
+                    <a asp-controller="Inboxly" asp-action=@action type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
                         <i class="mdi mdi-arrow-left"></i>
                     </a>
                 }
@@ -41,9 +52,9 @@
                         </span>
                     </div>
                 </div>
-                <h4 class="m-b-15">@messagedetails[0],</h4>
+                <h4 class="m-b-15">@Html.Raw(firstPart)</h4>
                 <p>
-                    @messagedetails[1]
+                    @Html.Raw(secondPart)
                 </p>
             </div>
         </div>

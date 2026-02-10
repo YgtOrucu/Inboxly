@@ -4,6 +4,7 @@ using Inboxly.Dtos.ForEmailSectionDtos;
 using Inboxly.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 namespace Inboxly.Controllers
 {
@@ -39,7 +40,7 @@ namespace Inboxly.Controllers
 
         public IActionResult Inbox()
         {
-            var getınbox = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == 1).ToList();
+            var getınbox = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == (int)MessageStatus.Inbox).ToList();
 
             var Listınbox = _mapper.Map<List<ForInboxDtos>>(getınbox);
 
@@ -48,15 +49,11 @@ namespace Inboxly.Controllers
 
         public IActionResult SendBox()
         {
-            var getsendbox = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == 2).ToList();
+            var getsendbox = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == (int)MessageStatus.Sent).ToList();
             var ListSendbox = _mapper.Map<List<ForSendboxDtos>>(getsendbox);
             return View(ListSendbox);
         }
 
-        public IActionResult ListDrafts()
-        {
-            return View();
-        }
         public async Task<IActionResult> ChangeStarsMessages(int id)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -144,22 +141,12 @@ namespace Inboxly.Controllers
 
         }
 
-        public IActionResult SendNewMessage()
-        {
-            return View();
-        }
-
-
         public IActionResult MessageDetails(int itemid)
         {
             var getmessage = _ınboxlyContext.Messages.Where(x => x.MessageId == itemid).FirstOrDefault();
             var messageDetails = _mapper.Map<EmailDetailsDto>(getmessage);
             return View(messageDetails);
         }
-
-
-
-
 
         public async Task<IActionResult> ListJobMessage()
         {
@@ -228,6 +215,59 @@ namespace Inboxly.Controllers
                 SendDate = x.SendDate
             });
             return View(listFriendlyMessages);
+        }
+
+        public async Task<IActionResult> ListDrafts()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getDraftMessage = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == (int)MessageStatus.Draft).ToList();
+
+            var ListDraftMessage = getDraftMessage.Select(x => new ForDraftMessageDto
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(ListDraftMessage);
+        }
+
+        [HttpGet]
+        public IActionResult SendNewMessage()
+        {
+            var values = _ınboxlyContext.Categories.Select(x => new SelectListItem
+            {
+                Value = x.CategoryId.ToString(),
+                Text = x.CategoryName,
+            });
+
+            ViewBag.Category = values;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendNewMessage(SendNewMessageDtos sendNewMessageDtos, string actionType)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            sendNewMessageDtos.SenderMail = user.Email;
+            sendNewMessageDtos.SenderName = user.Name;
+            sendNewMessageDtos.SenderSurname = user.Surname;
+            if (actionType == "draft")
+            {
+                sendNewMessageDtos.MessageStatusId = (int)MessageStatus.Draft;
+            }
+            else
+            {
+                sendNewMessageDtos.MessageStatusId = (int)MessageStatus.Sent;
+            }
+            var sendmessage = _mapper.Map<Message>(sendNewMessageDtos);
+
+            _ınboxlyContext.Messages.Add(sendmessage);
+            _ınboxlyContext.SaveChanges();
+            return RedirectToAction("SendBox");
         }
     }
 }

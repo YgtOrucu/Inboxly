@@ -28,7 +28,9 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-
+                            var cleanHtml = item.Details
+                            .Replace("<p>", "")
+                            .Replace("</p>", "");
                             string label = item.CategoryName switch
                             {
                                 "İş" => "label-danger",
@@ -76,7 +78,7 @@
                                     <a class="link" asp-controller="Inboxly" asp-action="MessageDetails" asp-route-itemid="@item.MessageId">
                                         <span class="label @(label) m-r-10">@(item.CategoryName)</span>
                                         <span class="blue-grey-text text-darken-4">
-                                            @item.Details
+                                            @Html.Raw(cleanHtml)
                                         </span>
                                     </a>
                                 </td>

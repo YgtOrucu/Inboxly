@@ -23,7 +23,7 @@ namespace Inboxly.InboxlyViewComponent.InboxlyLayoutViewComponent
 
             var messages = new MessageAreaSectionDto
             {
-                AllMessageCount = _ınboxlyContext.Messages.Count(),
+                AllMessageCount = _ınboxlyContext.Messages.Where(x=>x.ReceiverMail == user.Email).Count(),
                 Messages = _ınboxlyContext.Messages.Where(x => x.MessageStatusId == 1).OrderByDescending(y => y.SendDate).Take(5).Select(z => new MessagePreviewDto
                 {
                     NameSurnameHead = z.SenderName.Substring(0, 1) + z.SenderSurname.Substring(0, 1),

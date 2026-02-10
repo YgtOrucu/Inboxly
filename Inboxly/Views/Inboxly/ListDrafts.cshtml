@@ -1,7 +1,8 @@
-﻿
+﻿@model IEnumerable<ForDraftMessageDto>
 @{
     ViewData["Title"] = "ListDrafts";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
+    int count = 0;
 }
 
 
@@ -26,116 +27,77 @@
             <div class="table-responsive">
                 <table class="table email-table no-wrap table-hover v-middle">
                     <tbody>
-                        <tr class="unread align-middle">
-                            <!-- Checkbox -->
-                            <td class="chb">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox"
-                                           class="custom-control-input mail-check"
-                                           id="cst1">
-                                    <label class="custom-control-label" for="cst1">&nbsp;</label>
-                                </div>
-                            </td>
+                        @foreach (var item in Model)
+                        {
+                            var cleanHtml = item.Details
+                            .Replace("<p>", "")
+                            .Replace("</p>", "");
+                            string label = item.CategoryName switch
+                            {
+                                "İş" => "label-danger",
+                                "Ticari" => "label-warning",
+                                "Aile" => "label-success",
+                                "Arkadaşlar" => "label-info",
+                                _ => "label-secondary"
+                            };
 
 
-                            <!-- Star -->
-                            <td class="starred text-center">
-                                <a href="javascript:void(0)" class="star-toggle" title="Yıldızla">
-                                    <i class="far fa-star"></i>
-                                </a>
-                            </td>
-
-                            <!-- User image -->
-                            <td class="user-image">
-                                <img src="/mendy-admin/package/assets/images/users/1.jpg"
-                                     class="rounded-circle" width="30">
-                            </td>
-
-                            <!-- User name -->
-                            <td class="user-name">
-                                <h6 class="m-b-0">Hanna Gover</h6>
-                            </td>
-
-                            <!-- Message -->
-                            <td class="max-texts">
-                                <a class="link" asp-controller="Inboxly" asp-action="Inbox">
-                                    <span class="label label-danger m-r-10">İş</span>
-                                    <span class="blue-grey-text text-darken-4">
-                                        Lorem ipsum perspiciatis -
-                                    </span>
-                                    unde omnis iste natus error sit voluptatem
-                                </a>
-                            </td>
-
-                            <!-- Time -->
-                            <td class="time text-muted text-right" style="width: 70px;white-space: nowrap;">
-                                12:30
-                            </td>
-
-                            <td class="text-right action-col" style="width: 36px;">
-                                <a href="javascript:void(0)"
-                                   class="btn-trash text-muted"
-                                   title="Çöp Kutusuna Taşı">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-
-                        </tr>
-                        <tr class="unread align-middle">
-                            <!-- Checkbox -->
-                            <td class="chb">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox"
-                                           class="custom-control-input mail-check"
-                                           id="cst2">
-                                    <label class="custom-control-label" for="cst2">&nbsp;</label>
-                                </div>
-                            </td>
+                            count++;
+                            <tr class="unread align-middle">
+                                <!-- Checkbox -->
+                                <td class="chb">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox"
+                                               class="custom-control-input mail-check"
+                                               id="cts@(count)">
+                                        <label class="custom-control-label" for="cts@(count)">&nbsp;</label>
+                                    </div>
+                                </td>
 
 
-                            <!-- Star -->
-                            <td class="starred text-center">
-                                <a href="javascript:void(0)" class="star-toggle" title="Yıldızla">
-                                    <i class="far fa-star"></i>
-                                </a>
-                            </td>
+                                <!-- Star -->
+                                <td class="starred text-center">
+                                    <a href="/Inboxly/ChangeStarsMessages/@item.MessageId" class="star-toggle" title="Yıldızla">
+                                        <i class="far fa-star"></i>
+                                    </a>
+                                </td>
 
-                            <!-- User image -->
-                            <td class="user-image">
-                                <img src="/mendy-admin/package/assets/images/users/1.jpg"
-                                     class="rounded-circle" width="30">
-                            </td>
+                                <!-- User image -->
+                                <td class="user-image">
+                                    <div class="user-initials">
+                                        @(item.Name.Substring(0, 1) + item.Surname.Substring(0, 1))
+                                    </div>
+                                </td>
 
-                            <!-- User name -->
-                            <td class="user-name">
-                                <h6 class="m-b-0">Hanna Gover</h6>
-                            </td>
+                                <!-- User name -->
+                                <td class="user-name">
+                                    <h6 class="m-b-0">@(item.Name + " " + item.Surname)</h6>
+                                </td>
 
-                            <!-- Message -->
-                            <td class="max-texts">
-                                <a class="link" asp-controller="Inboxly" asp-action="Inbox">
-                                    <span class="label label-danger m-r-10">İş</span>
-                                    <span class="blue-grey-text text-darken-4">
-                                        Lorem ipsum perspiciatis -
-                                    </span>
-                                    unde omnis iste natus error sit voluptatem
-                                </a>
-                            </td>
+                                <!-- Message -->
+                                <td class="max-texts">
+                                    <a class="link" asp-controller="Inboxly" asp-action="MessageDetails" asp-route-itemid="@item.MessageId">
+                                        <span class="label @(label) m-r-10">@(item.CategoryName)</span>
+                                        <span class="blue-grey-text text-darken-4">
+                                            @Html.Raw(cleanHtml)
+                                        </span>
+                                    </a>
+                                </td>
 
-                            <!-- Time -->
-                            <td class="time text-muted text-right" style="width: 70px;white-space: nowrap;">
-                                12:30
-                            </td>
+                                <!-- Time -->
+                                <td class="time text-muted text-right" style="width: 70px;white-space: nowrap;">
+                                    @(item.SendDate.ToString("HH:mm tt"))
+                                </td>
 
-                            <td class="text-right action-col" style="width: 36px;">
-                                <a href="javascript:void(0)"
-                                   class="btn-trash text-muted"
-                                   title="Çöp Kutusuna Taşı">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-
-                        </tr>
+                                <td class="text-right action-col" style="width: 36px;">
+                                    <a asp-controller="Inboxly" asp-action="DeleteMessage" asp-route-itemid="@item.MessageId"
+                                       class="btn-trash text-muted"
+                                       title="Çöp Kutusuna Taşı">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

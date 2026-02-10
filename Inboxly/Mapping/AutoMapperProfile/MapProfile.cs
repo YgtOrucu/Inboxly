@@ -13,6 +13,7 @@ namespace Inboxly.Mapping.AutoMapperProfile
             CreateMap<AppUser, SignUpDto>().ReverseMap();
             CreateMap<AppUser, ProfileAreaSectionDto>().ReverseMap();
 
+            CreateMap<Message, SendNewMessageDtos>().ReverseMap();
 
             CreateMap<Message, ForInboxDtos>().ForMember(dest => dest.CategoryName,
                opt => opt.MapFrom(src => src.Categories.CategoryName)).ReverseMap();
