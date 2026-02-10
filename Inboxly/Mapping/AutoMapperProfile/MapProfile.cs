@@ -25,12 +25,6 @@ namespace Inboxly.Mapping.AutoMapperProfile
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.MessageStatusId == 1 ? src.SenderSurname : src.ReceiverSurname))
                 .ForMember(dest => dest.Mail, opt => opt.MapFrom(src => src.MessageStatusId == 1 ? src.SenderMail : src.ReceiverMail));
 
-
-            CreateMap<Message, ForStarsMessageDtos>()
-               .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.MessageStatusId == 1 ? src.SenderName : src.ReceiverName))
-               .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.MessageStatusId == 1 ? src.SenderSurname : src.ReceiverSurname))
-               .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Categories.CategoryName));
-
         }
 
     }

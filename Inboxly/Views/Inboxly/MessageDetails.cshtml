@@ -11,7 +11,7 @@
         @await Component.InvokeAsync("LeftBarInTheMailOperations")
         <div class="right-part mail-details bg-white" style="margin-left:260px;">
             <div class="card-body">
-                @if (Model.MessageId == 1)
+                @if (Model.MessageStatusId == 1)
                 {
                     <a asp-controller="Inboxly" asp-action="Inbox" type="button" id="back_to_inbox" class="btn btn-outline-secondary font-18 m-r-10">
                         <i class="mdi mdi-arrow-left"></i>

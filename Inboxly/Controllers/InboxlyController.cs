@@ -13,6 +13,23 @@ namespace Inboxly.Controllers
         private readonly InboxlyContext _ınboxlyContext;
         private readonly IMapper _mapper;
 
+        public enum MessageStatus
+        {
+            Inbox = 1,
+            Sent = 2,
+            Draft = 3,
+            Starred = 4,
+            Trash = 6
+        }
+
+        public enum MessageCategories
+        {
+            Job = 1,
+            Commerce = 2,
+            Family = 3,
+            Friendly = 4,
+        }
+
         public InboxlyController(UserManager<AppUser> userManager, InboxlyContext ınboxlyContext, IMapper mapper)
         {
             _userManager = userManager;
@@ -36,25 +53,95 @@ namespace Inboxly.Controllers
             return View(ListSendbox);
         }
 
-        public IActionResult Drafts()
+        public IActionResult ListDrafts()
         {
             return View();
         }
-        public IActionResult ChangeStarsMessages(int id)
+        public async Task<IActionResult> ChangeStarsMessages(int id)
         {
-            var redirect = "SendBox";
-            var getmessage = _ınboxlyContext.Messages.Where(x => x.MessageId == id).FirstOrDefault();
-            if (getmessage.MessageStatusId == 1)
-                redirect = "Inbox";
-            getmessage.MessageStatusId = 4;
-            _ınboxlyContext.Messages.Update(getmessage);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var message = _ınboxlyContext.Messages
+                .FirstOrDefault(x => x.MessageId == id);
+
+            if (message == null)
+                return NotFound();
+
+            var redirect = message.MessageStatusId == (int)MessageStatus.Inbox ? nameof(Inbox) : nameof(SendBox);
+
+            if (message.MessageStatusId == (int)MessageStatus.Inbox ||
+                message.MessageStatusId == (int)MessageStatus.Sent)
+            {
+                message.MessageStatusId = (int)MessageStatus.Starred;
+            }
+            else if (message.MessageStatusId == (int)MessageStatus.Starred)
+            {
+                if (message.ReceiverMail == user.Email)
+                {
+                    message.MessageStatusId = (int)MessageStatus.Inbox;
+                    redirect = nameof(Inbox);
+                }
+                else
+                {
+                    message.MessageStatusId = (int)MessageStatus.Sent;
+                    redirect = nameof(SendBox);
+                }
+            }
+
             _ınboxlyContext.SaveChanges();
             return RedirectToAction(redirect);
         }
-
-        public IActionResult DeletedMessages()
+        public async Task<IActionResult> ListStarsMessages()
         {
-            return View();
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getstarsmessage = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == (int)MessageStatus.Starred).ToList();
+
+            var liststarsmessage = getstarsmessage.Select(x => new ForStarsMessageDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(liststarsmessage);
+        }
+
+        public async Task<IActionResult> ListDeletedMessages()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getdeletemessages = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.MessageStatusId == (int)MessageStatus.Trash).ToList();
+
+            var listdeletemessages = getdeletemessages.Select(x => new ForDeleteMessageDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(listdeletemessages);
+        }
+
+        public IActionResult DeleteMessage(int itemid)
+        {
+            var deletedmessage = _ınboxlyContext.Messages.Find(itemid);
+            string redirect = deletedmessage.MessageStatusId switch
+            {
+                (int)MessageStatus.Inbox => nameof(Inbox),
+                (int)MessageStatus.Sent => nameof(SendBox),
+                (int)MessageStatus.Starred => nameof(ListStarsMessages),
+                (int)MessageStatus.Draft => nameof(ListDrafts),
+                _ => nameof(Inbox)
+            };
+
+            deletedmessage.MessageStatusId = (int)MessageStatus.Trash;
+            _ınboxlyContext.SaveChanges();
+            return RedirectToAction(redirect);
+
         }
 
         public IActionResult SendNewMessage()
@@ -70,5 +157,77 @@ namespace Inboxly.Controllers
             return View(messageDetails);
         }
 
+
+
+
+
+        public async Task<IActionResult> ListJobMessage()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getJobMessages = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.CategoryId == (int)MessageCategories.Job).ToList();
+
+            var listJobMessages = getJobMessages.Select(x => new ListToCategoriesDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(listJobMessages);
+        }
+        public async Task<IActionResult> ListCommerceMessage()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getCommerceMessages = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.CategoryId == (int)MessageCategories.Commerce).ToList();
+
+            var listCommerceMessages = getCommerceMessages.Select(x => new ListToCategoriesDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(listCommerceMessages);
+        }
+        public async Task<IActionResult> ListFamilyMessage()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getFamilyMessages = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.CategoryId == (int)MessageCategories.Family).ToList();
+
+            var listFamilyMessages = getFamilyMessages.Select(x => new ListToCategoriesDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(listFamilyMessages);
+        }
+        public async Task<IActionResult> ListFriendlyMessage()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var usermail = user.Email;
+            var getFriendlyMessages = _ınboxlyContext.Messages.Include(y => y.Categories).Where(x => x.CategoryId == (int)MessageCategories.Friendly).ToList();
+
+            var listFriendlyMessages = getFriendlyMessages.Select(x => new ListToCategoriesDtos
+            {
+                MessageId = x.MessageId,
+                Name = x.ReceiverMail == usermail ? x.SenderName : x.ReceiverName,
+                Surname = x.ReceiverMail == usermail ? x.SenderSurname : x.ReceiverSurname,
+                Details = x.Details,
+                CategoryName = x.Categories.CategoryName,
+                SendDate = x.SendDate
+            });
+            return View(listFriendlyMessages);
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿@model List<ForInboxDtos>
+﻿@model IEnumerable<ListToCategoriesDtos>
 @{
-    ViewData["Title"] = "Inbox";
+    ViewData["Title"] = "ListFamilyMessage";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
     int count = 0;
 }
@@ -16,9 +16,6 @@
                         <input type="checkbox" class="custom-control-input sl-all" id="cs">
                         <label class="custom-control-label" for="cs">&nbsp;</label>
                     </div>
-                </div>
-                <div class="ml-5">
-                    <h4 class="text-muted m-0">Gelen Kutusu</h4>
                 </div>
             </div>
 
@@ -51,24 +48,16 @@
                                     </div>
                                 </td>
 
-
-                                <!-- Star -->
-                                <td class="starred text-center">
-                                    <a href="/Inboxly/ChangeStarsMessages/@item.MessageId" class="star-toggle" title="Yıldızla">
-                                        <i class="far fa-star"></i>
-                                    </a>
-                                </td>
-
                                 <!-- User image -->
                                 <td class="user-image">
                                     <div class="user-initials">
-                                        @(item.SenderName.Substring(0, 1) + item.SenderSurname.Substring(0, 1))
+                                        @(item.Name.Substring(0, 1) + item.Surname.Substring(0, 1))
                                     </div>
                                 </td>
 
                                 <!-- User name -->
                                 <td class="user-name">
-                                    <h6 class="m-b-0">@(item.SenderName + " " + item.SenderSurname)</h6>
+                                    <h6 class="m-b-0">@(item.Name + " " + item.Surname)</h6>
                                 </td>
 
                                 <!-- Message -->
@@ -82,18 +71,9 @@
                                 </td>
 
                                 <!-- Time -->
-                                <td class="time text-muted text-right" style="width: 70px;white-space: nowrap;">
+                                <td class="time text-muted text-right">
                                     @(item.SendDate.ToString("HH:mm tt"))
                                 </td>
-
-                                <td class="text-right action-col" style="width: 36px;">
-                                    <a asp-controller="Inboxly" asp-action="DeleteMessage" asp-route-itemid="@item.MessageId"
-                                       class="btn-trash text-muted"
-                                       title="Çöp Kutusuna Taşı">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-
                             </tr>
                         }
                     </tbody>
@@ -102,3 +82,4 @@
         </div>
     </div>
 </div>
+

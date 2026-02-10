@@ -1,6 +1,6 @@
-﻿@model List<ForInboxDtos>
+﻿@model IEnumerable<ForStarsMessageDtos>
 @{
-    ViewData["Title"] = "Inbox";
+    ViewData["Title"] = "ListStarsMessages";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
     int count = 0;
 }
@@ -18,11 +18,10 @@
                     </div>
                 </div>
                 <div class="ml-5">
-                    <h4 class="text-muted m-0">Gelen Kutusu</h4>
+                    <h4 class="text-muted m-0">Yıldızlı Mesajlar</h4>
                 </div>
             </div>
 
-            <!-- MAİL LİSTESİ -->
             <div class="table-responsive">
                 <table class="table email-table no-wrap table-hover v-middle">
                     <tbody>
@@ -55,20 +54,20 @@
                                 <!-- Star -->
                                 <td class="starred text-center">
                                     <a href="/Inboxly/ChangeStarsMessages/@item.MessageId" class="star-toggle" title="Yıldızla">
-                                        <i class="far fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                     </a>
                                 </td>
 
                                 <!-- User image -->
                                 <td class="user-image">
                                     <div class="user-initials">
-                                        @(item.SenderName.Substring(0, 1) + item.SenderSurname.Substring(0, 1))
+                                        @(item.Name.Substring(0, 1) + item.Surname.Substring(0, 1))
                                     </div>
                                 </td>
 
                                 <!-- User name -->
                                 <td class="user-name">
-                                    <h6 class="m-b-0">@(item.SenderName + " " + item.SenderSurname)</h6>
+                                    <h6 class="m-b-0">@(item.Name + " " + item.Surname)</h6>
                                 </td>
 
                                 <!-- Message -->
@@ -102,3 +101,4 @@
         </div>
     </div>
 </div>
+

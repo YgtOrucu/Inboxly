@@ -3,6 +3,7 @@ using Inboxly.Dtos.ConfirmCodeDto;
 using Inboxly.Dtos.LoginDtos;
 using Inboxly.Entities;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
@@ -167,6 +168,15 @@ namespace Inboxly.Controllers
             return View(signUpDto);
         }
 
+        #endregion
+
+        #region Logout
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("SignIn");
+        }
         #endregion
     }
 }
