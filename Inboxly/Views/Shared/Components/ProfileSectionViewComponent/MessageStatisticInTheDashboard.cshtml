@@ -1,0 +1,79 @@
+﻿@model MessageStatistic
+
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+        <div class="card oh">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <span class="text-dark font-medium op-7 d-block mb-2">Gelen Mesajlar</span>
+                        <h3 class="mb-0">@Model.InboxCount</h3>
+                    </div>
+                    <div class="ml-auto align-self-end mb-1">
+                        <span class="text-success"><i class="fas fa-envelope mr-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 80px;">
+                <canvas id="chart1" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card oh">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <span class="text-dark font-medium op-7 d-block mb-2">Giden Mesajlar</span>
+                        <h3 class="mb-0">@Model.SendBoxCount</h3>
+                    </div>
+                    <div class="ml-auto align-self-end mb-1">
+                        <span class="text-primary"><i class="fas fa-paper-plane mr-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 80px;">
+                <canvas id="chart2" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card oh">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <span class="text-dark font-medium op-7 d-block mb-2">Yıldızlı</span>
+                        <h3 class="mb-0">@Model.StarsMessagesCount</h3>
+                    </div>
+                    <div class="ml-auto align-self-end mb-1">
+                        <span class="text-danger"><i class="fas fa-star mr-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 80px;">
+                <canvas id="chart3" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card oh">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div>
+                        <span class="text-dark font-medium op-7 d-block mb-2">Taslaklar</span>
+                        <h3 class="mb-0">@Model.DraftsCount</h3>
+                    </div>
+                    <div class="ml-auto align-self-end mb-1">
+                        <span class="text-danger"><i class="fas fa-file-alt mr-1"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 80px;">
+                <canvas id="chart4" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

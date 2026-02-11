@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Profil";
     Layout = "~/Views/Shared/_InboxlyLayout.cshtml";
 }
@@ -12,7 +11,7 @@
     </div>
     <div class="col-lg-8 col-md-7">
         <div class="card">
-  
+
             <ul class="nav nav-tabs" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-timeline-tab" data-toggle="pill" href="#current-month"
@@ -33,131 +32,90 @@
 
                 <div class="tab-pane fade show active" id="current-month" role="tabpanel"
                      aria-labelledby="pills-timeline-tab">
-                    <div class="card-body">
-                        <div class="profiletimeline m-t-0">
-                            <div class="sl-item">
-                                <div class="sl-left">
-                                    <img src="/mendy-admin/package/assets/images/users/1.jpg" alt="user"
-                                         class="rounded-circle" />
-                                </div>
-                                <div class="sl-right">
-                                    <div>
-                                        <a href="javascript:void(0)" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
-                                        <p>
-                                            assign a new task <a href="javascript:void(0)">
-                                                Design
-                                                weblayout
-                                            </a>
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-6 m-b-20">
-                                                <img src="/mendy-admin/package/assets/images/big/img1.jpg"
-                                                     class="img-fluid rounded" />
+                    <div class="card-body" style="background-color: #F3F3F5;border: 5px solid #fff;">
+
+                        @await Component.InvokeAsync("MessageStatisticInTheDashboard")
+
+                        <hr />
+
+                        @await Component.InvokeAsync("MembersInTheDashboard")
+
+                        <hr>
+
+                        @await Component.InvokeAsync("MessageByCategoryInTheDashboard")
+
+                        <hr>
+                        <div class="row" style="display:none;">
+                            <div class="col-md-12 col-lg-7">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <h4 class="card-title">Top 10 Best Performers</h4>
+                                                <h6 class="card-subtitle mb-0">
+                                                    Risus commodo viverra maecenas accumsan lacus
+                                                    vel
+                                                    facilisis.
+                                                </h6>
                                             </div>
-                                            <div class="col-lg-3 col-md-6 m-b-20">
-                                                <img src="/mendy-admin/package/assets/images/big/img2.jpg"
-                                                     class="img-fluid rounded" />
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 m-b-20">
-                                                <img src="/mendy-admin/package/assets/images/big/img3.jpg"
-                                                     class="img-fluid rounded" />
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 m-b-20">
-                                                <img src="/mendy-admin/package/assets/images/big/img4.jpg"
-                                                     class="img-fluid rounded" />
-                                            </div>
-                                        </div>
-                                        <div class="like-comm">
-                                            <a href="javascript:void(0)" class="link m-r-10">
-                                                2
-                                                comment
-                                            </a> <a href="javascript:void(0)" class="link m-r-10">
-                                                <i class="fa fa-heart text-danger"></i> 5 Love
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="sl-item">
-                                <div class="sl-left">
-                                    <img src="/mendy-admin/package/assets/images/users/2.jpg" alt="user"
-                                         class="rounded-circle" />
-                                </div>
-                                <div class="sl-right">
-                                    <div>
-                                        <a href="javascript:void(0)" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
-                                        <div class="m-t-20 row">
-                                            <div class="col-md-3 col-xs-12">
-                                                <img src="/mendy-admin/package/assets/images/big/img1.jpg"
-                                                     alt="user" class="img-fluid rounded" />
-                                            </div>
-                                            <div class="col-md-9 col-xs-12">
-                                                <p>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                    elit. Integer nec odio. Praesent libero. Sed cursus
-                                                    ante dapibus diam.
-                                                </p> <a href="javascript:void(0)"
-                                                        class="btn btn-success"> Design weblayout</a>
+                                            <div class="ml-auto">
+                                                <div class="dropdown title-dropdown">
+                                                    <button class="btn btn-link text-muted dropdown-toggle" type="button" id="dd1"
+                                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i data-feather="more-horizontal"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd1">
+                                                        <a class="dropdown-item" href="#">Edit</a>
+                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="like-comm m-t-20">
-                                            <a href="javascript:void(0)"
-                                               class="link m-r-10">2 comment</a> <a href="javascript:void(0)"
-                                                                                    class="link m-r-10">
-                                                <i class="fa fa-heart text-danger"></i>
-                                                5 Love
-                                            </a>
+                                        <div class="mt-5" style="height: 205px;">
+                                            <canvas id="bar-chart" width="400" height="150"></canvas>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="sl-item">
-                                <div class="sl-left">
-                                    <img src="/mendy-admin/package/assets/images/users/3.jpg" alt="user"
-                                         class="rounded-circle" />
-                                </div>
-                                <div class="sl-right">
-                                    <div>
-                                        <a href="javascript:void(0)" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
-                                        <p class="m-t-10">
-                                            Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing elit. Integer nec odio. Praesent libero. Sed
-                                            cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh
-                                            elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
-                                            Fusce nec tellus sed augue semper
-                                        </p>
-                                    </div>
-                                    <div class="like-comm m-t-20">
-                                        <a href="javascript:void(0)" class="link m-r-10">
-                                            2
-                                            comment
-                                        </a> <a href="javascript:void(0)" class="link m-r-10">
-                                            <i class="fa fa-heart text-danger"></i> 5 Love
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="sl-item">
-                                <div class="sl-left">
-                                    <img src="/mendy-admin/package/assets/images/users/4.jpg" alt="user"
-                                         class="rounded-circle" />
-                                </div>
-                                <div class="sl-right">
-                                    <div>
-                                        <a href="javascript:void(0)" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>
-                                        <blockquote class="m-t-10">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                            sed do eiusmod tempor incididunt
-                                        </blockquote>
+                                        <div class="row mt-5 mb-3">
+                                            <div class="col-6 col-md-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div>
+                                                        <i class="text-primary" data-feather="target"></i>
+                                                    </div>
+                                                    <div class="ml-2">
+                                                        <h3 class="mb-0">$3,567.56</h3>
+                                                        <span>Total Income</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4">
+                                                <div class="d-flex align-items-start">
+                                                    <div>
+                                                        <i class="text-primary" data-feather="trending-up"></i>
+                                                    </div>
+                                                    <div class="ml-2">
+                                                        <h3 class="mb-0">$769.08</h3>
+                                                        <span>Monthly Avg</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-3 mt-md-0">
+                                                <div class="d-flex align-items-start">
+                                                    <div>
+                                                        <i class="text-primary" data-feather="shopping-bag"></i>
+                                                    </div>
+                                                    <div class="ml-2">
+                                                        <h3 class="mb-0">5489</h3>
+                                                        <span>Total Sales</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 @await Component.InvokeAsync("ProfileAreaInTheProfilePage")
                 @await Component.InvokeAsync("SettingInTheProfilePage")

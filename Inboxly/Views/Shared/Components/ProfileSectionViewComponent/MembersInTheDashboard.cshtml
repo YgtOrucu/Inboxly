@@ -1,0 +1,47 @@
+﻿@model List<GetMember>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">Kayıtlı Üyeler</h4>
+                        <h6 class="card-subtitle mb-0">
+                            Sistem üzerinde iletişimde olduğunuz kullanıcıların listesi.
+                        </h6>
+                    </div>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table class="table no-wrap v-middle">
+                        <thead>
+                            <tr class="bg-light">
+                                <th class="border-0 text-muted">Profil</th>
+                                <th class="border-0 text-muted">E-posta</th>
+                                <th class="border-0 text-muted">Lokasyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="@item.AvatarImage" alt="user" class="rounded-circle"
+                                                 width="40" />
+                                            <div class="ml-2">
+                                                <span class="text-dark font-medium">@item.Name @item.Surname</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-dark">@item.Email</td>
+                                    <td class="text-dark">@item.Location</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

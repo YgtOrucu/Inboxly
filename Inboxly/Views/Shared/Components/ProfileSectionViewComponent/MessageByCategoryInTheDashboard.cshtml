@@ -1,0 +1,103 @@
+﻿@model List<MessageByCategory>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h4 class="card-title">Kategorilere Göre Mesaj Dağılımı</h4>
+                        <h6 class="card-subtitle mb-0">
+                            Sistemdeki mesajların kategori bazlı güncel sayıları.
+                        </h6>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-4" style="height: 250px; overflow-y: auto;">
+                    <table class="table v-middle no-wrap mb-0">
+                        <thead>
+                            <tr class="border-0">
+                                <th class="border-0 font-medium text-muted">Kategori</th>
+                                <th class="border-0 font-medium text-muted text-center">Mesaj Sayısı</th>
+                                <th class="border-0 font-medium text-muted">Öncelik</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                string badge = item.CategoryName switch
+                                {
+                                    "İş" => "badge-primary",
+                                    "Ticari" => "badge-success",
+                                    "Aile" => "badge-danger",
+                                    "Arkadaşlar" => "badge-info"
+                                    
+                                };
+                                string label = item.CategoryName switch
+                                {
+                                    "İş" => "Yüksek",
+                                    "Ticari" => "Normal",
+                                    "Aile" => "Önemli",
+                                    "Arkadaşlar" => "Düşük",
+                                };
+                                string icon = item.CategoryName switch
+                                {
+                                    "İş" => "fas fa-briefcase",
+                                    "Ticari" => "fas fa-hand-holding-usd",
+                                    "Aile" => "fas fa-heart",
+                                    "Arkadaşlar" => "fas fa-users",
+                                };
+                                string btn = item.CategoryName switch
+                                {
+                                    "İş" => "btn-light-primary text-primary",
+                                    "Ticari" => "btn-light-success text-success",
+                                    "Aile" => "btn-light-danger text-danger",
+                                    "Arkadaşlar" => "btn-light-info text-info",
+                                };
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="m-r-10">
+                                                <span class="btn btn-circle btn-sm @btn">
+                                                    <i class="@icon"></i>
+                                                </span>
+                                            </div>
+                                            <h5 class="m-b-0 font-16 font-medium">@item.CategoryName</h5>
+                                        </div>
+                                    </td>
+                                    <td class="text-center font-medium">@item.Count</td>
+                                    <td><span class="badge @badge">@label</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mt-5 mb-3">
+                    <div class="col-6 col-md-4">
+                        <div class="d-flex align-items-start">
+                            <div>
+                                <i class="text-info" data-feather="list"></i>
+                            </div>
+                            <div class="ml-2">
+                                <h3 class="mb-0">@ViewBag.TotalCategoryCount</h3>
+                                <span class="text-muted">Toplam Kategori</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 mt-3 mt-md-0">
+                        <div class="d-flex align-items-start">
+                            <div>
+                                <i class="text-warning" data-feather="mail"></i>
+                            </div>
+                            <div class="ml-2">
+                                <h3 class="mb-0">@ViewBag.TotalMessageCount</h3>
+                                <span class="text-muted">Toplam Mesaj</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
