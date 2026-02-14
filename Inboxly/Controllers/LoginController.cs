@@ -117,7 +117,7 @@ namespace Inboxly.Controllers
 
             using var client = new SmtpClient();
             await client.ConnectAsync("smtp.gmail.com", 587, false);
-            await client.AuthenticateAsync("orucuyigit@gmail.com", "iird tqib syqm yprr");
+            await client.AuthenticateAsync("orucuyigit@gmail.com", "");
             await client.SendAsync(mimeMessage);
             await client.DisconnectAsync(true);
         }
