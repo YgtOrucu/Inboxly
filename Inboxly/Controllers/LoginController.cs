@@ -105,7 +105,7 @@ namespace Inboxly.Controllers
         private async Task SendConfirmCodeToUser(string email, int confirmcode)
         {
             var mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress("Admin", "orucuyigit@gmail.com"));
+            mimeMessage.From.Add(new MailboxAddress("Admin", "abc@gmail.com"));
             mimeMessage.To.Add(new MailboxAddress("User", email));
             mimeMessage.Subject = "Giriş Doğrulama Kodu";
             var bodybuilder = new BodyBuilder
@@ -117,7 +117,7 @@ namespace Inboxly.Controllers
 
             using var client = new SmtpClient();
             await client.ConnectAsync("smtp.gmail.com", 587, false);
-            await client.AuthenticateAsync("orucuyigit@gmail.com", "");
+            await client.AuthenticateAsync("abc@gmail.com", "");
             await client.SendAsync(mimeMessage);
             await client.DisconnectAsync(true);
         }

@@ -8,7 +8,7 @@ namespace Inboxly.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=YIGITORUCU\\MY_YAZILIM_KURSU;database=DB_Inboxly;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("DB_ADRESİ");
         }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageStatus> MessageStatuses  { get; set; }

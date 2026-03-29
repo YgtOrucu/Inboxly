@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<InboxlyContext>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(opt => opt.AddMaps(typeof(Program)));
 builder.Services.AddIdentity<AppUser, AppRole>(option =>
 {
     option.User.RequireUniqueEmail = true;
